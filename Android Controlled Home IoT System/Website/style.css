@@ -1,0 +1,125 @@
+body{
+    background-color: #000;
+    color: #fff;
+}
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+}
+
+ul{
+    list-style: none;
+    list-style-position: inside;
+    display: none;
+}
+
+main{
+    text-align: center;
+    display : grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "Light1 Light2"
+    "Fan1 Light3"
+    "Dropdown Input";
+    grid-gap: 50px;
+    justify-items:center;
+    align-items: center;
+    left: 50%;
+}
+
+#Light1{
+    grid-area: Light1;
+}
+
+#Light1{
+    grid-area: Light2;
+}
+
+#Fan1{
+    grid-area: Fan1;
+}
+
+#Light1{
+    grid-area: Light3;
+}
+
+#dropdown{
+    grid-area: Dropdown;
+    position: relative;
+}
+
+.input{
+    grid-area: Input;
+}
+
+div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.active{
+    display :grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    top: 100%;
+    transform: translate(-7.5%,0px);
+    position: absolute;
+}
+
+button{
+    padding: 20px;
+    border-style: hidden;
+    border-radius: 50px;
+    border-width: 2px;
+    background: none;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    width: fit-content;
+    border-style: groove;
+    overflow: hidden;
+    color: #fff;
+    transition: 0.2s;
+}
+
+*{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+:focus{
+    outline: 0;
+}
+
+.fanbtn{
+    background-color: lightgrey;
+    box-shadow: none;
+    color: #000;
+    border-style: none;
+}
+
+.fanbtn:active, #setfanspeed:focus{
+    background-color: rgba(128,128,128,0.5);
+}
+
+.on{
+    border-style: none;
+    color: #000;
+    transition: 0.2s;
+    background-color: #ffff66;
+    box-shadow: 0 0 10px #ffff66,0 0 40px #ffff66,0 0 80px #ffff66;
+}
+
+.alert{
+    border-style: none;
+    background-color: red;
+    box-shadow: 0 0 10px red,0 0 40px red,0 0 80px red;
+}
+
+h2{
+    display: none;
+}
