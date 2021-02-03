@@ -15,7 +15,7 @@ static const uint8_t LED4 = 15;
 const char* authtoken = STATAUTHTOKEN;
 const char* ssid = STASSID;
 const char* password = STAPSK;
-const char* host = "WebsiteAddress";
+const char* host = "WebsiteURL";
 const int httpsPort = 443;
 
 Button* light1 = new Button("class=\"light1\">"," ","light1",LED1);
