@@ -18,15 +18,15 @@ const char* password = STAPSK;
 const char* host = "WebsiteURL";
 const int httpsPort = 443;
 
+WiFiClientSecure client;
+
 Button* light1 = new Button("class=\"light1\">"," ","light1",LED1);
 Button* light2 = new Button("class=\"light2\">"," ","light2",LED2);
 Button* fan1 = new Button("class=\"fan1\">"," ","fan1",LED3);
 Button* light3 = new Button("class=\"light3\">"," ","light3",LED4);
 FanSpeedButton* fanspeed = new FanSpeedButton("id=\"currentspeed\">Current Speed : "," ","Fan Speed");
 
-const char fingerprint[] PROGMEM = "WEBSITES FINGERPRINT(IF HTTPS)";
-
-WiFiClientSecure client;
+const char fingerprint[] PROGMEM = "WebsiteFingerprint";//If HTTPS
 
 void setup() {
   pinMode(LED1,OUTPUT);
@@ -40,8 +40,6 @@ void setup() {
   client.setFingerprint(fingerprint);
 }
 
-void connectToWifi();
-
 void loop() {
   String url = "/";
   if(client.connect(host, httpsPort))
@@ -51,31 +49,11 @@ void loop() {
                 "User-Agent: ESP8266\r\n" +
                 "Connection: keep-alive\r\n\r\n");
     Serial.println("----------------------------");
-    if(client.find(light1->loc))
-    {
-      client.readBytes(light1->value, 1); 
-      light1->found();
-    }
-    if(client.find(light2->loc))
-    {
-      client.readBytes(light2->value, 1); 
-      light2->found();
-    }
-    if(client.find(fan1->loc))
-    {
-      client.readBytes(fan1->value, 1); 
-      fan1->found();
-    }     
-    if(client.find(light3->loc))
-    {
-      client.readBytes(light3->value, 1); 
-      light3->found();
-    }     
-    if(client.find(fanspeed->loc))
-    {
-      client.readBytes(fanspeed->value, 1); 
-      fanspeed->found();
-    }
+    light1->update(client);
+    light2->update(client);
+    fan1->update(client);
+    light3->update(client);
+    fanspeed->update(client);
     int temp = random(22,50);
     String tempurl = String("/temp.php?temp=") + String(temp) + String("&authkey=") + String(authtoken);
     client.print(String("GET ") + tempurl + " HTTP/1.1\r\n" +
@@ -88,13 +66,6 @@ void loop() {
   else
   {
     Serial.println("Error Connecting");
-    connectToWifi();
   }
   delay(5000);
-}
-
-void connectToWifi(){
-  WiFi.mode(WIFI_OFF);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
 }
