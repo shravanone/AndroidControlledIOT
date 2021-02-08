@@ -17,15 +17,24 @@ class Button
     }
     void found()
     {
-      if((String)this->value=="1")
+      if((String)value=="1")
       {
-        Serial.println(this->name+" Is On");
-        digitalWrite(this->pin, HIGH);
+        Serial.println(name+" Is On");
+        digitalWrite(pin, HIGH);
       }
       else
       {
-        Serial.println(this->name+" Is Off");
-        digitalWrite(this->pin, LOW);
+        Serial.println(name+" Is Off");
+        digitalWrite(pin, LOW);
+      }
+    }
+
+    void update(WiFiClientSecure client)
+    {
+      if(client.find(loc))
+      {
+        client.readBytes(value, 1); 
+        found();
       }
     }
 };
@@ -44,6 +53,14 @@ class FanSpeedButton
   }
   void found()
   {
-      Serial.println(this->name+" Is "+this->value);
+      Serial.println(name+" Is "+value);
+  }
+  void update(WiFiClientSecure client)
+  {
+    if(client.find(loc))
+    {
+      client.readBytes(value, 1); 
+      found();
+    }
   }
 };
